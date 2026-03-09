@@ -1,0 +1,5 @@
+sample_name,sample_run,sample_path
+PN0136_0001,run_01,/mnt/SSD02/work/Belfast/project_edoardo/scRNAseq/231101_ECFCs_cocolture/data/raw_data/FASTQ/PN0136_0001
+PN0136_0002,run_01,/mnt/SSD02/work/Belfast/project_edoardo/scRNAseq/231101_ECFCs_cocolture/data/raw_data/FASTQ/PN0136_0002
+PN0136_0003,run_01,/mnt/SSD02/work/Belfast/project_edoardo/scRNAseq/231101_ECFCs_cocolture/data/raw_data/FASTQ/PN0136_0003
+PN0136_0004,run_01,/mnt/SSD02/work/Belfast/project_edoardo/scRNAseq/231101_ECFCs_cocolture/data/raw_data/FASTQ/PN0136_0004

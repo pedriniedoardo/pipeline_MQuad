@@ -1,0 +1,44 @@
+# Instructions here: https://snakemake.readthedocs.io/en/stable/executing/cli.html
+executor: slurm
+jobs: 30
+conda-prefix: .snakemake/conda
+rerun-incomplete: true
+keep-going: true
+latency-wait: 60
+cores: 72
+# retries: 3 # set the number of attempts in case of a failed run (this is used to increase the resources with attempts)
+
+conda-base-path: /opt/common/tools/ric.cosr/miniconda3
+# conda-base-path: /home/pedrini.edoardo/miniconda3
+
+# No wall time information given. This might or might not work on your cluster. If not, specify the resource runtime in your rule or as a reasonable default via --default-resources.
+# TBD
+#
+default-resources:
+    slurm_account: "ric.cosr"
+    mem_mb: 5000
+    cores: 1
+
+set-threads:
+    runCellSNPLite: 20
+    runMQuad: 20
+    runVireo: 20
+    runMQuadStandalone: 20
+    runVireoStandalone: 20
+
+set-resources:
+    runCellSNPLite: 
+        mem_mb: 64000
+        mem_gb: 64
+    runMQuad: 
+        mem_mb: 64000
+        mem_gb: 64
+    runVireo: 
+        mem_mb: 64000
+        mem_gb: 64
+    runMQuadStandalone:
+        mem_mb: 64000
+        mem_gb: 64
+    runVireoStandalone:
+        mem_mb: 64000
+        mem_gb: 64

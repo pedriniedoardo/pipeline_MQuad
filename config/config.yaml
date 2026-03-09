@@ -1,0 +1,37 @@
+# test variables and file
+test01: "resources/test01.txt" 
+test02: "resources/test02.txt" 
+test_out: "test_out.txt" 
+test_out_location: "test_out/"
+
+# conda env
+conda_env: "../envs/env_MQuad.yaml"
+
+# Preprocessing
+# input directory
+dir_input: "/idle/ric.cosr/ric.cosr/pedrini.edoardo/test_MQuad/data/test_absinta/results/cellranger/merged/"
+dir_standalone: "/idle/ric.cosr/ric.cosr/pedrini.edoardo/test_MQuad/data/test_MQuand/"
+
+# output directory
+dir_output: "results/"
+
+# parameters for the run
+# chrom: "MT"
+# chrom: "chrMT"
+chrom: "chrM"
+
+# https://github.com/single-cell-genetics/MQuad
+# For droplet-based sequencing data, eg. 10X Chromium CNV, scATAC..etc, it is recommended to add --minDP 5 or a smaller value to prevent errors during fitting. The default value is 10, which is suitable for Smart-seq2 data but might be too stringent for low sequencing depth data.
+minDP: 5
+test_clones: [2, 3, 4, 5]
+
+# hardcode the sample name:
+sample_name:
+  # - 'TNBC1'
+  # - 'TNBC2'
+  # - 'TNBC5'
+  # - 'sample_10X_5p'
+  - 's38'
+  - 's59'
+  - 'hBS_RR16_MG'
+  - 'W8_24h_CSF-controls_plus_untreated_multiplexed'

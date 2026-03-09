@@ -1,0 +1,107 @@
+# Snakefile for RCTD
+
+# ======================================================================
+# == import libraries ==
+# ======================================================================
+
+from snakemake.utils import min_version
+# min_version("8.25.5")
+import pandas as pd
+import os
+
+# ======================================================================
+# == import config ==
+# ======================================================================
+
+# load the config here because the steps below need some variables available in the config
+configfile: "config/config.yaml"
+# this is needed because the resources for RAM and cpus per rule are defined in the profile
+configfile: "profiles/default/config.v8+.yaml"
+
+# ======================================================================
+# == load sample information ==
+# ======================================================================
+
+SAMPLES = config["sample_name"]
+
+# ======================================================================
+# == load rules ==
+# ======================================================================
+
+include: "rules/preprocessing.smk"
+include: "rules/test.smk"
+
+# ======================================================================
+# == pipeline main rules (calling for the outputs) ==
+# ======================================================================
+
+rule run_barcodes:
+        '''
+        wrapper to generate the barcodes
+        '''
+        input:
+                # List all the output attributes from the runPreprocessPlot rule
+                expand(
+                        [
+                        rules.ruleUnzipBarcode.output.barcodes
+                        ],
+                        # Apply the SAMPLES list to the {sample_name} wildcard in all paths above
+                        sample_name=SAMPLES
+                        )
+
+
+rule run_cellsnp:
+        '''
+        wrapper to run cellsnp-lite
+        '''
+        input:
+                # List all the output attributes from the runPreprocessPlot rule
+                expand(
+                        [
+                        rules.runCellSNPLite.output.vcf
+                        ],
+                        # Apply the SAMPLES list to the {sample_name} wildcard in all paths above
+                        sample_name=SAMPLES
+                        )
+
+rule run_mquad:
+        '''
+        wrapper to run mquad
+        '''
+        input:
+                # List all the output attributes from the runPreprocessPlot rule
+                expand(
+                        [
+                        rules.runMQuad.output.passed_ad
+                        ],
+                        # Apply the SAMPLES list to the {sample_name} wildcard in all paths above
+                        sample_name=SAMPLES
+                        )
+
+rule run_vireo:
+        '''
+        wrapper to run vireo
+        '''
+        input:
+                # List all the output attributes from the runPreprocessPlot rule
+                expand(
+                        [
+                        rules.runVireo.output.clones_df
+                        ],
+                        # Apply the SAMPLES list to the {sample_name} wildcard in all paths above
+                        sample_name=SAMPLES
+                        )
+
+rule run_standalone:
+        '''
+        wrapper to run mquad for standalone samples
+        '''
+        input:
+                # List all the output attributes from the runPreprocessPlot rule
+                expand(
+                        [
+                        rules.runVireoStandalone.output.clones_df
+                        ],
+                        # Apply the SAMPLES list to the {sample_name} wildcard in all paths above
+                        sample_name=SAMPLES
+                        )

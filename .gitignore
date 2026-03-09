@@ -1,0 +1,19 @@
+# files
+*.log
+*.mro
+.Rhistory
+
+# folders
+.snakemake/
+benchmarks/
+logs/
+results/
+pypette/
+logs/
+results_old/
+data/
+.Rproj.user
+workflow/test/R_code/out/
+workflow/test/R_code/data/
+workflow/test/cellbender/example
+workflow/test/cellbender/test_connect_5k_pbmc

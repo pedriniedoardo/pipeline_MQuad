@@ -1,0 +1,12 @@
+name: env_MQuad
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.14.3
+  - pip=26.0.1
+  - ipykernel
+  - cellsnp-lite=1.2.3
+  - pip:
+    - mquad==0.1.8
+    - vireoSNP==0.5.9
