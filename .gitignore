@@ -2,6 +2,7 @@
 *.log
 *.mro
 .Rhistory
+Rplots.pdf
 
 # folders
 .snakemake/

@@ -6,10 +6,12 @@ test_out_location: "test_out/"
 
 # conda env
 conda_env: "../envs/env_MQuad.yaml"
+env_R: "../envs/env_testR.yaml"
 
 # Preprocessing
 # input directory
 dir_input: "/idle/ric.cosr/ric.cosr/pedrini.edoardo/test_MQuad/data/test_absinta/results/cellranger/merged/"
+# dir_input: "/idle/ric.cosr/ric.cosr/pedrini.edoardo/test_MQuad/data/test_Mquad2/results/cellranger/merged/"
 dir_standalone: "/idle/ric.cosr/ric.cosr/pedrini.edoardo/test_MQuad/data/test_MQuand/"
 
 # output directory
@@ -31,7 +33,8 @@ sample_name:
   # - 'TNBC2'
   # - 'TNBC5'
   # - 'sample_10X_5p'
-  - 's38'
+  # - 's38'
   - 's59'
   - 'hBS_RR16_MG'
   - 'W8_24h_CSF-controls_plus_untreated_multiplexed'
+  # - 'SC5v2_Melanoma_5Kcells_Connect_single_channel_gex'

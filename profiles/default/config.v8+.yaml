@@ -25,6 +25,7 @@ set-threads:
     runVireo: 20
     runMQuadStandalone: 20
     runVireoStandalone: 20
+    plotMQuadResults: 16
 
 set-resources:
     runCellSNPLite: 
@@ -42,3 +43,6 @@ set-resources:
     runVireoStandalone:
         mem_mb: 64000
         mem_gb: 64
+    plotMQuadResults:
+        mem_mb: 16000
+        mem_gb: 16

@@ -47,3 +47,12 @@ rule runVireoStandalone:
     script:
         "../scripts/vireo.py"
 
+rule testRenv:
+    '''
+    A simple dummy rule to test if the Renv environment activates correctly.
+    '''
+    output:
+        "results/test/renv_test_passed.txt"
+    conda: config["env_R"]
+    script:
+        "../test/R_code/analysis_R45/scr/snakemake/00_test_renv.R"

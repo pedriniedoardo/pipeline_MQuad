@@ -101,3 +101,35 @@ rule runVireo:
         n_donors = config["test_clones"]
     script:
         "../scripts/vireo.py"
+
+rule plotMQuadResults:
+    '''
+    Generates exploratory heatmaps and boxplots summarizing the MQuad and vireoSNP outputs using R and ComplexHeatmap.
+    '''
+    input:
+        # Vireo Master Tables
+        clone_assignments = rules.runVireo.output.clones_df,
+        variant_donors = rules.runVireo.output.variant_df,
+        elbo_inits = rules.runVireo.output.ELBO_df,
+        
+        # MQuad Matrices (Need to access these directly from the MQuad output)
+        passed_ad = rules.runMQuad.output.passed_ad,
+        passed_dp = rules.runMQuad.output.passed_dp,
+        variant_names = rules.runMQuad.output.passed_variant,
+        
+        # Original Barcodes
+        barcodes = rules.ruleUnzipBarcode.output.barcodes
+    output:
+        # Define where the 5 PDF plots should be saved
+        plot_elbo = config["dir_output"] + "plots/{sample_name}/01_ELBO.pdf",
+        plot_ratio = config["dir_output"] + "plots/{sample_name}/01_hm_allelic_ratio.pdf",
+        plot_prob = config["dir_output"] + "plots/{sample_name}/01_hm_donor_prob.pdf",
+        plot_af_all = config["dir_output"] + "plots/{sample_name}/01_hm_donor_AF_all.pdf",
+        plot_af_conf = config["dir_output"] + "plots/{sample_name}/01_hm_donor_AF_confident.pdf"
+    conda: 
+        config["env_R"] # Assuming you have a separate R environment defined
+    params:
+        # Pass the list of donors tested so R knows which N values to plot
+        donors = config["test_clones"] 
+    script:
+        "../test/R_code/analysis_R45/scr/snakemake/01_plot_MQuad_output.R"

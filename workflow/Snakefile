@@ -92,6 +92,25 @@ rule run_vireo:
                         sample_name=SAMPLES
                         )
 
+rule run_plotMQuadResults:
+        '''
+        wrapper the reporting and EDA
+        '''
+        input:
+                # List all the output attributes from the runPreprocessPlot rule
+                expand(
+                        [
+                        rules.plotMQuadResults.output.plot_elbo,
+                        rules.plotMQuadResults.output.plot_ratio,
+                        rules.plotMQuadResults.output.plot_prob,
+                        rules.plotMQuadResults.output.plot_af_all,
+                        rules.plotMQuadResults.output.plot_af_conf
+                        ],
+                        # Apply the SAMPLES list to the {sample_name} wildcard in all paths above
+                        sample_name=SAMPLES
+                        )
+
+
 rule run_standalone:
         '''
         wrapper to run mquad for standalone samples
