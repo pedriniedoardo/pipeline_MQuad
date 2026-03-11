@@ -125,7 +125,8 @@ rule plotMQuadResults:
         plot_ratio = config["dir_output"] + "plots/{sample_name}/01_hm_allelic_ratio.pdf",
         plot_prob = config["dir_output"] + "plots/{sample_name}/01_hm_donor_prob.pdf",
         plot_af_all = config["dir_output"] + "plots/{sample_name}/01_hm_donor_AF_all.pdf",
-        plot_af_conf = config["dir_output"] + "plots/{sample_name}/01_hm_donor_AF_confident.pdf"
+        plot_af_conf = config["dir_output"] + "plots/{sample_name}/01_hm_donor_AF_confident.pdf",
+        plot_tree = config["dir_output"] + "plots/{sample_name}/01_lineageTree.pdf"
     conda: 
         config["env_R"] # Assuming you have a separate R environment defined
     params:

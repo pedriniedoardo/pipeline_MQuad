@@ -25,6 +25,7 @@ out_plot_ratio <- snakemake@output[["plot_ratio"]]
 out_plot_prob <- snakemake@output[["plot_prob"]]
 out_plot_af_all <- snakemake@output[["plot_af_all"]]
 out_plot_af_conf <- snakemake@output[["plot_af_conf"]]
+out_plot_tree <- snakemake@output[["plot_tree"]]
 
 # Parameters
 id_donor <- paste0("N", snakemake@params[["donors"]])
@@ -43,6 +44,9 @@ library(patchwork)
 library(magick)
 library(Matrix)
 library(pals)
+library(ape)        
+library(ggtree)     
+library(treeio)
 
 # functions ---------------------------------------------------------------
 read_mquad_mtx <- function(path_MM, path_barcode, path_variant) {
@@ -115,11 +119,15 @@ af_matrix <- as.matrix(mtx_AD / mtx_DP)
 af_matrix[is.na(af_matrix)] <- 0
 
 # exploration -------------------------------------------------------------
+
+
+# plot ELBO ---------------------------------------------------------------
 # 1. Plot ELBO
 p01 <- ELBO_df_long %>%
   ggplot(aes(x = donor_n, y = ELBO)) + geom_boxplot() + theme_bw()
 ggsave(plot = p01, filename = out_plot_elbo, width = 4, height = 3)
 
+# plot AF per clone -------------------------------------------------------
 # 2. Plot Allelic Ratio
 list_mat <- lapply(id_donor, function(id){
   sample_variant %>% select(Variant_Name, contains(id)) %>%
@@ -137,6 +145,7 @@ list_plothm <- lapply(list_hm, function(x){
 p02 <- wrap_plots(list_plothm)
 ggsave(plot = p02, filename = out_plot_ratio, width = 12, height = 12)
 
+# plot clone prob per barcode ---------------------------------------------
 # 3. Plot Donor Probabilities
 list_mat2 <- lapply(id_donor, function(id){
   df_prob %>% filter(donor_number %in% id) %>%
@@ -157,6 +166,7 @@ list_plothm2 <- lapply(list_hm2, function(x){
 p03 <- wrap_plots(list_plothm2)
 ggsave(plot = p03, filename = out_plot_prob, width = 12, height = 12)
 
+# plot AF per barcode -----------------------------------------------------
 # 4. Plot AF All
 list_mat3_all <- lapply(id_donor, function(id_don){
   df_clone_id <- df_clone %>% filter(id == id_don)
@@ -176,11 +186,11 @@ list_hm3_all <- pmap(list(names(list_mat3_all), list_mat3_all), function(nm, obj
           # column_title = nm,
           name = "AF", top_annotation = obj$clust, col = col_fun_alRatio,
           cluster_columns = FALSE, column_split = obj$meta %>% pull(clone_id_plot), show_row_names = TRUE,
-          show_column_names = FALSE, column_title_rot = 45, column_title_side = "top", use_raster = TRUE, raster_quality = 2)
+          show_column_names = FALSE, show_row_dend = FALSE, column_title_rot = 45, column_title_side = "top", use_raster = TRUE, raster_quality = 2)
 })
 
 list_plothm3_all <- lapply(list_hm3_all, function(x){
-  grid.grabExpr(draw(x, heatmap_legend_side = "left", padding = unit(c(2, 2, 2, 40), "mm")))
+  grid.grabExpr(draw(x, heatmap_legend_side = "left",annotation_legend_side = "left", padding = unit(c(2, 2, 2, 40), "mm")))
 })
 p04 <- wrap_plots(list_plothm3_all)
 ggsave(plot = p04, filename = out_plot_af_all, width = 20, height = 12)
@@ -204,11 +214,75 @@ list_hm3_confident <- pmap(list(names(list_mat3_confident), list_mat3_confident)
           # column_title = nm,
           name = "AF", top_annotation = obj$clust, col = col_fun_alRatio,
           cluster_columns = FALSE, column_split = obj$meta %>% pull(clone_id_plot), show_row_names = TRUE,
-          show_column_names = FALSE, column_title_rot = 45, column_title_side = "top", use_raster = TRUE, raster_quality = 2)
+          show_column_names = FALSE, show_row_dend = FALSE, column_title_rot = 45, column_title_side = "top", use_raster = TRUE, raster_quality = 2)
 })
 
 list_plothm3_confident <- lapply(list_hm3_confident, function(x){
-  grid.grabExpr(draw(x, heatmap_legend_side = "left", padding = unit(c(2, 2, 2, 40), "mm")))
+  grid.grabExpr(draw(x, heatmap_legend_side = "left",annotation_legend_side = "left", padding = unit(c(2, 2, 2, 40), "mm")))
 })
 p05 <- wrap_plots(list_plothm3_confident)
 ggsave(plot = p05, filename = out_plot_af_conf, width = 20, height = 12)
+
+# plot lineage tree -------------------------------------------------------
+# target_N <- "N2"
+list_plot_trees <- lapply(id_donor, function(target_N){
+  
+  # pull the AF per clone and reshape it
+  clone_matrix <- sample_variant %>% 
+    select(Variant_Name, contains(target_N)) %>% 
+    column_to_rownames("Variant_Name")
+  
+  mat_clones <- t(clone_matrix)
+  rownames(mat_clones) <- str_replace_all(rownames(mat_clones), paste0(target_N, "_|_VAF"), "")
+  
+  # build the summary matrix
+  column_id <- paste0("clone_id_",target_N)
+  newname <- "label"
+  
+  df_summary_clones <- sample_donor %>%
+    select(sample_id, contains(column_id)) %>%
+    dplyr::rename_with(~newname, .cols = column_id) %>%
+    group_by(label) %>%
+    summarise(n = n()) %>%
+    mutate(label = paste0("Clone_",label)) %>%
+    # add the simulated ancestor reference
+    bind_rows(data.frame(label = "Ancestor (sim)", n = 1))
+  
+  # Distance & Tree Building
+  root_node <- rep(0, ncol(mat_clones))
+  mat_clones_rooted <- rbind(mat_clones, 'Ancestor (sim)' = root_node)
+  
+  dist_mat <- dist(mat_clones_rooted, method = "euclidean")
+  clone_tree <- nj(dist_mat)
+  clone_tree <- root(clone_tree, outgroup = "Ancestor (sim)", resolve.root = TRUE)
+  
+  # Ground the Ancestor
+  anc_index <- which(clone_tree$tip.label == "Ancestor (sim)")
+  anc_edge <- which(clone_tree$edge[, 2] == anc_index)
+  if(length(anc_edge) > 0) clone_tree$edge.length[anc_edge] <- 0
+  
+  # Join the number of cells to the tree info
+  tree_with_data <- full_join(clone_tree, df_summary_clones, by = "label")
+  
+  # make the plot
+  p_tree <- ggtree(tree_with_data, aes(color = label), size = 1) +
+    geom_tiplab(size = 5, fontface = "bold", offset = 0.05, color = "black") +
+    geom_tippoint(aes(size = n)) +
+    scale_color_discrete(na.value = "black") +
+    theme_tree2() +
+    ggtitle(paste("Evolutionary Lineage:", target_N)) +
+    coord_cartesian(clip = "off") + 
+    scale_size_continuous(range = c(1, 7), name = "Number of Cells",
+                          breaks = scales::breaks_log(n = 4,base = 2)) +
+    theme(
+      legend.position = "left",
+      plot.margin = margin(t = 20, r = 150, b = 20, l = 20, unit = "pt")
+    ) +
+    guides(color = "none")
+  
+  return(p_tree)
+})
+
+# Wrap the trees side-by-side
+p06 <- wrap_plots(list_plot_trees)
+ggsave(plot = p06, filename = out_plot_tree, width = 20, height = 12)

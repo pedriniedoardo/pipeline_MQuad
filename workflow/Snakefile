@@ -104,7 +104,8 @@ rule run_plotMQuadResults:
                         rules.plotMQuadResults.output.plot_ratio,
                         rules.plotMQuadResults.output.plot_prob,
                         rules.plotMQuadResults.output.plot_af_all,
-                        rules.plotMQuadResults.output.plot_af_conf
+                        rules.plotMQuadResults.output.plot_af_conf,
+                        rules.plotMQuadResults.output.plot_tree
                         ],
                         # Apply the SAMPLES list to the {sample_name} wildcard in all paths above
                         sample_name=SAMPLES

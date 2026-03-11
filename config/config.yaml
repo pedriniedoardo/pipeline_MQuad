@@ -33,7 +33,7 @@ sample_name:
   # - 'TNBC2'
   # - 'TNBC5'
   # - 'sample_10X_5p'
-  # - 's38'
+  - 's38'
   - 's59'
   - 'hBS_RR16_MG'
   - 'W8_24h_CSF-controls_plus_untreated_multiplexed'
