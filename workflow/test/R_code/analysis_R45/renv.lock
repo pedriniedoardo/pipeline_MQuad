@@ -1782,6 +1782,40 @@
       "Author": "Hervé Pagès [aut, cre]",
       "Maintainer": "Hervé Pagès <hpages.on.github@gmail.com>"
     },
+    "VGAM": {
+      "Package": "VGAM",
+      "Version": "1.1-14",
+      "Source": "Repository",
+      "Date": "2025-12-02",
+      "Title": "Vector Generalized Linear and Additive Models",
+      "Authors@R": "c(person(\"Thomas\", \"Yee\", role = c(\"aut\", \"cre\"), comment = c(ORCID = \"0000-0002-9970-3907\"), email = \"t.yee@auckland.ac.nz\"), person(\"Cleve\", \"Moler\", role = \"ctb\", comment = \"LINPACK routines in src\"))",
+      "Author": "Thomas Yee [aut, cre] (ORCID: <https://orcid.org/0000-0002-9970-3907>), Cleve Moler [ctb] (LINPACK routines in src)",
+      "Maintainer": "Thomas Yee <t.yee@auckland.ac.nz>",
+      "Depends": [
+        "R (>= 4.1.0)",
+        "methods",
+        "stats",
+        "stats4",
+        "splines"
+      ],
+      "Suggests": [
+        "VGAMextra",
+        "MASS",
+        "mgcv"
+      ],
+      "Enhances": [
+        "VGAMdata"
+      ],
+      "Description": "An implementation of about 6 major classes of statistical regression models. The central algorithm is Fisher scoring and iterative reweighted least squares. At the heart of this package are the vector generalized linear and additive model (VGLM/VGAM) classes. VGLMs can be loosely thought of as multivariate GLMs. VGAMs are data-driven VGLMs that use smoothing. The book \"Vector Generalized Linear and Additive Models: With an Implementation in R\" (Yee, 2015) <DOI:10.1007/978-1-4939-2818-7> gives details of the statistical framework and the package. Currently only fixed-effects models are implemented. Many (100+) models and distributions are estimated by maximum likelihood estimation (MLE) or penalized MLE. The other classes are RR-VGLMs (reduced-rank VGLMs), quadratic RR-VGLMs, doubly constrained RR-VGLMs, quadratic RR-VGLMs, reduced-rank VGAMs, RCIMs (row-column interaction models)---these classes perform constrained and unconstrained quadratic ordination (CQO/UQO) models in ecology, as well as constrained additive ordination (CAO). Hauck-Donner effect detection is implemented. Note that these functions are subject to change; see the NEWS and ChangeLog files for latest changes.",
+      "License": "GPL-3",
+      "URL": "https://www.stat.auckland.ac.nz/~yee/VGAM/",
+      "NeedsCompilation": "yes",
+      "BuildVignettes": "yes",
+      "LazyLoad": "yes",
+      "LazyData": "yes",
+      "Repository": "CRAN",
+      "Encoding": "UTF-8"
+    },
     "VariantAnnotation": {
       "Package": "VariantAnnotation",
       "Version": "1.56.0",
@@ -3153,6 +3187,52 @@
       "Author": "Hadley Wickham [aut, cre], Maximilian Girlich [aut], Edgar Ruiz [aut], Posit Software, PBC [cph, fnd]",
       "Maintainer": "Hadley Wickham <hadley@posit.co>",
       "Repository": "CRAN"
+    },
+    "deepSNV": {
+      "Package": "deepSNV",
+      "Version": "1.56.0",
+      "Source": "Bioconductor",
+      "Maintainer": "Moritz Gerstung <moritz.gerstung@ebi.ac.uk>",
+      "License": "GPL-3",
+      "Title": "Detection of subclonal SNVs in deep sequencing data.",
+      "biocViews": "GeneticVariability, SNP, Sequencing, Genetics, DataImport",
+      "LinkingTo": [
+        "Rhtslib (>= 1.13.1)"
+      ],
+      "Type": "Package",
+      "LazyLoad": "yes",
+      "Authors@R": "c( person(\"Niko\",\"Beerenwinkel\", role=\"ths\"), person(\"Raul\", \"Alcantara\", role=\"ctb\"), person(\"David\", \"Jones\", role = \"ctb\"), person(\"John\", \"Marshall\", role = \"ctb\"), person(\"Inigo\", \"Martincorena\", role = \"ctb\"), person(\"Moritz\",\"Gerstung\", email = \"moritz.gerstung@ebi.ac.uk\", role= c(\"aut\",\"cre\")) )",
+      "Description": "This package provides provides quantitative variant callers for detecting subclonal mutations in ultra-deep (>=100x coverage) sequencing experiments. The deepSNV algorithm is used for a comparative setup with a control experiment of the same loci and uses a beta-binomial model and a likelihood ratio test to discriminate sequencing errors and subclonal SNVs. The shearwater algorithm computes a Bayes classifier based on a beta-binomial model for variant calling with multiple samples for precisely estimating model parameters - such as local error rates and dispersion - and prior knowledge, e.g. from variation data bases such as COSMIC.",
+      "Depends": [
+        "R (>= 2.13.0)",
+        "methods",
+        "graphics",
+        "parallel",
+        "IRanges",
+        "GenomicRanges",
+        "SummarizedExperiment",
+        "Biostrings",
+        "VGAM",
+        "VariantAnnotation (>= 1.27.6)"
+      ],
+      "Imports": [
+        "Rhtslib"
+      ],
+      "Suggests": [
+        "RColorBrewer",
+        "knitr",
+        "rmarkdown"
+      ],
+      "VignetteBuilder": "knitr",
+      "SystemRequirements": "GNU make",
+      "RoxygenNote": "7.0.2",
+      "git_url": "https://git.bioconductor.org/packages/deepSNV",
+      "git_branch": "RELEASE_3_22",
+      "git_last_commit": "50518b9",
+      "git_last_commit_date": "2025-10-29",
+      "Repository": "Bioconductor 3.22",
+      "NeedsCompilation": "yes",
+      "Author": "Niko Beerenwinkel [ths], Raul Alcantara [ctb], David Jones [ctb], John Marshall [ctb], Inigo Martincorena [ctb], Moritz Gerstung [aut, cre]"
     },
     "dichromat": {
       "Package": "dichromat",
@@ -5239,6 +5319,60 @@
       "Maintainer": "Yihui Xie <xie@yihui.name>",
       "Repository": "CRAN"
     },
+    "mitoClone2": {
+      "Package": "mitoClone2",
+      "Version": "1.16.0",
+      "Source": "Bioconductor",
+      "Type": "Package",
+      "Title": "Clonal Population Identification in Single-Cell RNA-Seq Data using Mitochondrial and Somatic Mutations",
+      "LinkingTo": [
+        "Rhtslib (>= 1.13.1)"
+      ],
+      "Authors@R": "c( person(given = \"Benjamin\", family = \"Story\", role = c(\"aut\", \"cre\"), email = \"story.benjamin@gmail.com\"), person(given = \"Lars\", family = \"Velten\", role = \"aut\"), person(given = \"Gregor\", family = \"Mönke\", role = \"aut\") )",
+      "Description": "This package primarily identifies variants in mitochondrial genomes from BAM alignment files. It filters these variants to remove RNA editing events then estimates their evolutionary relationship (i.e. their phylogenetic tree) and groups single cells into clones. It also visualizes the mutations and providing additional genomic context.",
+      "License": "GPL-3",
+      "VignetteBuilder": "knitr",
+      "Encoding": "UTF-8",
+      "LazyData": "false",
+      "biocViews": "Annotation, DataImport, Genetics, SNP, Software, SingleCell, Alignment",
+      "Imports": [
+        "reshape2",
+        "GenomicRanges",
+        "pheatmap",
+        "deepSNV",
+        "grDevices",
+        "Matrix",
+        "graphics",
+        "stats",
+        "utils",
+        "S4Vectors",
+        "Rhtslib",
+        "parallel",
+        "methods",
+        "ggplot2"
+      ],
+      "Suggests": [
+        "knitr",
+        "rmarkdown",
+        "Biostrings",
+        "testthat"
+      ],
+      "RoxygenNote": "7.1.0",
+      "SystemRequirements": "GNU make, PhISCS (optional)",
+      "Depends": [
+        "R (>= 4.4.0)"
+      ],
+      "NeedsCompilation": "yes",
+      "URL": "https://github.com/benstory/mitoClone2",
+      "Bugreports": "https://github.com/benstory/mitoClone2/issues",
+      "git_url": "https://git.bioconductor.org/packages/mitoClone2",
+      "git_branch": "RELEASE_3_22",
+      "git_last_commit": "43b5799",
+      "git_last_commit_date": "2025-10-29",
+      "Repository": "Bioconductor 3.22",
+      "Author": "Benjamin Story [aut, cre], Lars Velten [aut], Gregor Mönke [aut]",
+      "Maintainer": "Benjamin Story <story.benjamin@gmail.com>"
+    },
     "modelr": {
       "Package": "modelr",
       "Version": "0.1.11",
@@ -5593,6 +5727,43 @@
       "BugReports": "https://github.com/r-lib/pkgconfig/issues",
       "Encoding": "UTF-8",
       "NeedsCompilation": "no",
+      "Repository": "CRAN"
+    },
+    "plyr": {
+      "Package": "plyr",
+      "Version": "1.8.9",
+      "Source": "Repository",
+      "Title": "Tools for Splitting, Applying and Combining Data",
+      "Authors@R": "person(\"Hadley\", \"Wickham\", , \"hadley@rstudio.com\", role = c(\"aut\", \"cre\"))",
+      "Description": "A set of tools that solves a common set of problems: you need to break a big problem down into manageable pieces, operate on each piece and then put all the pieces back together.  For example, you might want to fit a model to each spatial location or time point in your study, summarise data by panels or collapse high-dimensional arrays to simpler summary statistics. The development of 'plyr' has been generously supported by 'Becton Dickinson'.",
+      "License": "MIT + file LICENSE",
+      "URL": "http://had.co.nz/plyr, https://github.com/hadley/plyr",
+      "BugReports": "https://github.com/hadley/plyr/issues",
+      "Depends": [
+        "R (>= 3.1.0)"
+      ],
+      "Imports": [
+        "Rcpp (>= 0.11.0)"
+      ],
+      "Suggests": [
+        "abind",
+        "covr",
+        "doParallel",
+        "foreach",
+        "iterators",
+        "itertools",
+        "tcltk",
+        "testthat"
+      ],
+      "LinkingTo": [
+        "Rcpp"
+      ],
+      "Encoding": "UTF-8",
+      "LazyData": "true",
+      "RoxygenNote": "7.2.3",
+      "NeedsCompilation": "yes",
+      "Author": "Hadley Wickham [aut, cre]",
+      "Maintainer": "Hadley Wickham <hadley@rstudio.com>",
       "Repository": "CRAN"
     },
     "png": {
@@ -6115,6 +6286,41 @@
       "NeedsCompilation": "no",
       "Author": "Jennifer Bryan [aut, cre] (<https://orcid.org/0000-0002-6983-2759>), Jim Hester [aut] (<https://orcid.org/0000-0002-2739-7082>), David Robinson [aut], Hadley Wickham [aut] (<https://orcid.org/0000-0003-4757-117X>), Christophe Dervieux [aut] (<https://orcid.org/0000-0003-4474-2498>), Posit Software, PBC [cph, fnd]",
       "Maintainer": "Jennifer Bryan <jenny@posit.co>",
+      "Repository": "https://packagemanager.posit.co/cran/__linux__/rhel9/latest"
+    },
+    "reshape2": {
+      "Package": "reshape2",
+      "Version": "1.4.5",
+      "Source": "Repository",
+      "Title": "Flexibly Reshape Data: A Reboot of the Reshape Package",
+      "Authors@R": "person(\"Hadley\", \"Wickham\", , \"hadley@posit.co\", role = c(\"aut\", \"cre\"))",
+      "Description": "Flexibly restructure and aggregate data using just two functions: melt and 'dcast' (or 'acast').",
+      "License": "MIT + file LICENSE",
+      "URL": "https://github.com/hadley/reshape",
+      "BugReports": "https://github.com/hadley/reshape/issues",
+      "Depends": [
+        "R (>= 3.1)"
+      ],
+      "Imports": [
+        "plyr (>= 1.8.1)",
+        "Rcpp",
+        "stringr"
+      ],
+      "Suggests": [
+        "covr",
+        "lattice",
+        "testthat (>= 3.0.0)"
+      ],
+      "LinkingTo": [
+        "Rcpp"
+      ],
+      "Config/testthat/edition": "3",
+      "Encoding": "UTF-8",
+      "LazyData": "true",
+      "RoxygenNote": "7.3.3",
+      "NeedsCompilation": "yes",
+      "Author": "Hadley Wickham [aut, cre]",
+      "Maintainer": "Hadley Wickham <hadley@posit.co>",
       "Repository": "https://packagemanager.posit.co/cran/__linux__/rhel9/latest"
     },
     "restfulr": {
