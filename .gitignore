@@ -9,6 +9,7 @@ Rplots.pdf
 benchmarks/
 logs/
 results/
+results_bkp/
 pypette/
 logs/
 results_old/
